@@ -22,21 +22,14 @@ class SessionDBAuth(SessionExpAuth):
 
     def user_id_for_session_id(self, session_id=None):
         """Return user_id based on session_id from the database"""
-        if session_id is None:
+        try:
+            user_sessions = UserSession.search({'session_id': session_id})
+        except Exception:
             return None
-
-        user_sessions = UserSession.search({'session_id': session_id})
-        if not user_sessions:
+        if len(user_sessions) <= 0:
             return None
 
         user_session = user_sessions[0]
-
-        if self.session_duration <= 0:
-            return user_session.user_id
-
-        if 'created_at' not in user_session.__dict__:
-            return None
-
         created_at = user_session.created_at
         exp_time = created_at + timedelta(seconds=self.session_duration)
         if exp_time < datetime.now():
