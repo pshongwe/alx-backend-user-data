@@ -4,7 +4,6 @@ App file
 """
 from flask import Flask, jsonify, request
 from auth import Auth
-from typing import Tuple, Dict, Any
 
 app = Flask(__name__)
 AUTH = Auth()
@@ -17,7 +16,7 @@ def get():
 
 
 @app.route("/users", methods=["POST"])
-def create_user() -> Tuple[Dict[str, Any], int]:
+def create_user() -> str:
     """
     Create a new user account.
 
