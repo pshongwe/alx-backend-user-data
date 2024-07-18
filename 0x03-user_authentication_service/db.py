@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """DB module
 """
-from typing import Dict
 import logging
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
@@ -47,7 +46,7 @@ class DB:
             raise
         return newUser
 
-    def find_user_by(self, **kwargs: Dict[str, str]) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """Find user by attribute(s)"""
         try:
             user = self._session.query(User).filter_by(**kwargs).one()
