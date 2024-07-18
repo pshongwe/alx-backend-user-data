@@ -16,7 +16,7 @@ def get():
 
 
 @app.route("/users", methods=["POST"])
-def create_user() -> str:
+def users() -> str:
     """
     Create a new user account.
 
