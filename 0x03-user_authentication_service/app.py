@@ -15,15 +15,10 @@ def get():
     return jsonify({"message": "Bienvenue"})
 
 
-@app.route("/users", methods=["POST"])
+@app.route("/users", methods=["POST"], strict_slashes=False)
 def users() -> str:
     """
-    Create a new user account.
-
-    Returns:
-        tuple: A JSON response and HTTP status code.
-            On success: ({'email': str, 'message': str}, 201)
-            On failure: ({'message': str}, 400)
+    Create a new user.
     """
     email = request.form.get("email")
     password = request.form.get("password")
