@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """DB module
 """
+from typing import Dict
 import logging
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -43,3 +46,14 @@ class DB:
             self._session.rollback()
             raise
         return newUser
+
+    def find_user_by(self, **kwargs: Dict[str, str]) -> User:
+        """Find user by attribute(s)"""
+        sesh = self._session
+        try:
+            user = sesh.query(User).filter_by(**kwargs).one()
+        except NoResultFound:
+            raise NoResultFound()
+        except InvalidRequestError:
+            raise InvalidRequestError()
+        return user
